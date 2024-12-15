@@ -10,8 +10,9 @@
 *.mpeg
 *.m4v
 
-
-table/
-examples/
+models/
 output/
+table/
+videos/
 myenv/
+examples/
