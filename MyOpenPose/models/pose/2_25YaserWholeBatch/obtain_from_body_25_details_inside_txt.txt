@@ -1,3 +1,0 @@
-# Model used in OP - Obtain from
-/media/web/OpenPose/models/pose/body_25
-
