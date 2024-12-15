@@ -9,3 +9,9 @@
 *.mpg
 *.mpeg
 *.m4v
+
+
+MyOpenPose/table
+MyOpenPose/examples
+MyOpenPose/output
+MyOpenPose/myenv
