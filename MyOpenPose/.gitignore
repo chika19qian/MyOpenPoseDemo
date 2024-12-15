@@ -1,0 +1,11 @@
+# 忽略所有视频文件
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+*.webm
+*.mpg
+*.mpeg
+*.m4v
