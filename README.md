@@ -51,7 +51,7 @@ Finally, with `004_visualize_diff.py`, create a video overlaying skeletons on st
 1. Clone this repository:
    ```bash
    git clone https://github.com/chika19qian/OpenPose_DanceComparing.git
-   cd OpenPose_DanceComparing
+   cd MyOpenPose
    ```
 
 2. **Install dependencies**:
