@@ -5,6 +5,8 @@ import json
 import csv
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
+from scipy.interpolate import interp1d
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 os.environ['PATH'] += os.pathsep + os.path.join(dir_path, 'bin')
@@ -114,12 +116,24 @@ def calculate_angles(keypoints):
 #########################################
 #   3) 计算角度差异 & DTW
 #########################################
-def compute_angle_offset(student_kp, teacher_kp, use_dtw=False):
+def compute_angle_offset(student_kp, teacher_kp, use_dtw=False, align_method='truncate'):
     """
     计算学生与老师的角度差异，支持 DTW。
     """
-    if student_kp.shape != teacher_kp.shape:
-        raise ValueError(f"Shape mismatch: student_kp={student_kp.shape}, teacher_kp={teacher_kp.shape}")
+    if student_kp.shape[0] != teacher_kp.shape[0]:
+        print(f"Aligning frame counts: student_kp={student_kp.shape[0]}, teacher_kp={teacher_kp.shape[0]}")
+        if align_method == 'truncate':
+            # 截短到最短帧数
+            min_frames = min(student_kp.shape[0], teacher_kp.shape[0])
+            student_kp = student_kp[:min_frames]
+            teacher_kp = teacher_kp[:min_frames]
+        elif align_method == 'interpolate':
+            # 插值对齐到相同帧数
+            target_frames = max(student_kp.shape[0], teacher_kp.shape[0])
+            student_kp = interpolate_keypoints(student_kp, target_frames)
+            teacher_kp = interpolate_keypoints(teacher_kp, target_frames)
+        else:
+            raise ValueError(f"Unsupported align_method: {align_method}")
 
     frames_count = student_kp.shape[0]
 
@@ -167,6 +181,18 @@ def compute_angle_offset(student_kp, teacher_kp, use_dtw=False):
             offset_table.append([])
     return offset_table
 
+def interpolate_keypoints(keypoints, target_frames):
+    """
+    插值对齐关键点数据到指定帧数。
+    :param keypoints: 原始关键点数据 (frames, num_joints, 2)
+    :param target_frames: 目标帧数
+    :return: 插值后的关键点数据
+    """
+    num_frames, num_joints, _ = keypoints.shape
+    x = np.arange(num_frames)
+    x_new = np.linspace(0, num_frames - 1, target_frames)
+    interp_func = interp1d(x, keypoints, axis=0, kind='linear', fill_value="extrapolate")
+    return interp_func(x_new)
 
 #########################################
 #   4) 保存角度偏移表
@@ -208,19 +234,19 @@ if __name__ == "__main__":
     output_dir = "table"
     os.makedirs(output_dir, exist_ok=True)
 
-    student_kp = extract_keypoints_with_full_interpolation("videos/student_resampled_800x1200.mp4")
-    teacher_kp = extract_keypoints_with_full_interpolation("videos/teacher_resampled_800x1200.mp4")
+    student_kp = extract_keypoints_with_full_interpolation("videos/girls_student_resampled_800.mp4")
+    teacher_kp = extract_keypoints_with_full_interpolation("videos/girls_teacher_resampled_800.mp4")
 
     print(f"Student keypoints shape: {student_kp.shape}")
     print(f"Teacher keypoints shape: {teacher_kp.shape}")
 
      # 保存关键点数据
-    save_keypoints_to_csv(student_kp, os.path.join(output_dir, "student_keypoints.csv"))
-    save_keypoints_to_csv(teacher_kp, os.path.join(output_dir, "teacher_keypoints.csv"))
+    save_keypoints_to_csv(student_kp, os.path.join(output_dir, "girls_student_keypoints.csv"))
+    save_keypoints_to_csv(teacher_kp, os.path.join(output_dir, "girls_teacher_keypoints.csv"))
 
 
     offset_table = compute_angle_offset(student_kp, teacher_kp, use_dtw=True)
-    save_offset_table(offset_table, os.path.join(output_dir, "angle_offset_table.csv"), save_format='csv')
+    save_offset_table(offset_table, os.path.join(output_dir, "girls_angle_offset_table.csv"), save_format='csv')
 
     flattened = [angle for frame in offset_table for angle in frame if not np.isnan(angle)]
     if flattened:

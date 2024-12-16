@@ -98,7 +98,7 @@ def plot_angle_heatmap(angle_matrix, frames, title="Angle Difference Heatmap", s
 
 def main():
     # 修改为角度偏移表路径
-    csv_path = os.path.join("table", "angle_offset_table.csv")
+    csv_path = os.path.join("table", "girls_angle_offset_table.csv")
     json_path = os.path.join("table", "angle_offset_table.json")
 
     if os.path.exists(csv_path):
@@ -108,7 +108,7 @@ def main():
             angle_matrix, 
             frames,
             title="Angle Difference Heatmap (CSV)",
-            save_path="output/angle_heatmap_csv.png"
+            save_path="output/1angle_heatmap_csv.png"
         )
     elif os.path.exists(json_path):
         frames, angle_matrix = load_angle_offset_table_json(json_path)

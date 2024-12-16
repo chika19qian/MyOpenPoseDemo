@@ -49,8 +49,8 @@ def resample_video(input_path, output_path, target_frames, target_fps=30, resize
 
 
 def main():
-    student_video = "examples/chuxue_me.mp4"
-    teacher_video = "examples/chuxue_teacher.mp4"
+    student_video = "examples/girls_me.mp4"
+    teacher_video = "examples/girls_teacher.mp4"
 
     # 打开老师视频，获取它的帧数和FPS，用来统一时长
     cap_t = cv2.VideoCapture(teacher_video)
@@ -58,13 +58,13 @@ def main():
     teacher_fps = cap_t.get(cv2.CAP_PROP_FPS)
     cap_t.release()
 
-    # 固定分辨率 800×1200
-    fixed_w, fixed_h = 1280, 720
+    # 固定分辨率 800×1200 ; 1280x700
+    fixed_w, fixed_h = 800, 1200
 
     # 把学生视频重采样到 (teacher_frames, teacher_fps)，同时强制 800×1200
     resample_video(
         input_path=student_video,
-        output_path="videos/student_resampled_720.mp4",
+        output_path="videos/girls_student_resampled_800.mp4",
         target_frames=teacher_frames,
         target_fps=teacher_fps,
         resize_dim=(fixed_w, fixed_h)  # 固定宽高
@@ -73,7 +73,7 @@ def main():
     # 老师视频也可以保存一份新文件，让两段都变成 800×1200 大小
     resample_video(
         input_path=teacher_video,
-        output_path="videos/teacher_resampled_720.mp4",
+        output_path="videos/girls_teacher_resampled_800.mp4",
         target_frames=teacher_frames,
         target_fps=teacher_fps,
         resize_dim=(fixed_w, fixed_h)
