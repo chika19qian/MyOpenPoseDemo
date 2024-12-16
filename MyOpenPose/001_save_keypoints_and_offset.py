@@ -18,9 +18,10 @@ import pyopenpose as op
 #########################################
 def extract_keypoints_with_full_interpolation(video_path, model_folder="./models/", number_people_max=1):
     """
-    使用 OpenPose 提取关键点并对空帧做插值处理。
-    返回 shape=(frames, num_joints, 2) 的numpy数组。
+    Extract keypoints using OpenPose and handle interpolation for missing frames.
+    Returns a numpy array of shape=(frames, num_joints, 2).
     """
+ 
     params = {
         "model_folder": model_folder,
         "number_people_max": number_people_max
@@ -48,7 +49,7 @@ def extract_keypoints_with_full_interpolation(video_path, model_folder="./models
 
         pose_keypoints = datums_vec[0].poseKeypoints
         if pose_keypoints is not None and pose_keypoints.shape[0] > 0:
-            keypoints_list.append(pose_keypoints[0][:, :2])  # 只取第一个人的 2D 关键点
+            keypoints_list.append(pose_keypoints[0][:, :2]) 
         else:
             keypoints_list.append(None)
 
