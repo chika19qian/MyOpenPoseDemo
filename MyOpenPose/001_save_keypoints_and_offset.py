@@ -234,19 +234,19 @@ if __name__ == "__main__":
     output_dir = "table"
     os.makedirs(output_dir, exist_ok=True)
 
-    student_kp = extract_keypoints_with_full_interpolation("videos/girls_student_resampled_800.mp4")
-    teacher_kp = extract_keypoints_with_full_interpolation("videos/girls_teacher_resampled_800.mp4")
+    student_kp = extract_keypoints_with_full_interpolation("videos/lip_me_resampled_800.mp4")
+    teacher_kp = extract_keypoints_with_full_interpolation("videos/lip_teacher_resampled_800.mp4")
 
     print(f"Student keypoints shape: {student_kp.shape}")
     print(f"Teacher keypoints shape: {teacher_kp.shape}")
 
      # 保存关键点数据
-    save_keypoints_to_csv(student_kp, os.path.join(output_dir, "girls_student_keypoints.csv"))
-    save_keypoints_to_csv(teacher_kp, os.path.join(output_dir, "girls_teacher_keypoints.csv"))
+    save_keypoints_to_csv(student_kp, os.path.join(output_dir, "lip_me_keypoints.csv"))
+    save_keypoints_to_csv(teacher_kp, os.path.join(output_dir, "lip_teacher_keypoints.csv"))
 
 
     offset_table = compute_angle_offset(student_kp, teacher_kp, use_dtw=True)
-    save_offset_table(offset_table, os.path.join(output_dir, "girls_angle_offset_table.csv"), save_format='csv')
+    save_offset_table(offset_table, os.path.join(output_dir, "lip_angle_offset_table.csv"), save_format='csv')
 
     flattened = [angle for frame in offset_table for angle in frame if not np.isnan(angle)]
     if flattened:

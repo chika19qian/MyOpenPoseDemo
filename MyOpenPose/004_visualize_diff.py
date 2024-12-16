@@ -156,13 +156,13 @@ def create_highlighted_video(student_csv, teacher_csv, angles_csv, high_diff_csv
     print(f"Highlighted video saved to: {output_video_path}")
 
 if __name__ == "__main__":
-    student_csv = "table/girls_student_keypoints.csv"
-    teacher_csv = "table/girls_teacher_keypoints.csv"
-    angles_csv = "table/girls_angle_offset_table.csv"
-    high_diff_csv = "table/girls_high_angle_diff_joints.csv"
-    teacher_video_path = "videos/girls_teacher_resampled_800.mp4"
-    student_video_path = "videos/girls_student_resampled_800.mp4"
-    output_video_path = "output/girls_highlighted_skeleton_video.mp4"
+    student_csv = "table/lip_me_keypoints.csv"
+    teacher_csv = "table/lip_teacher_keypoints.csv"
+    angles_csv = "table/lip_angle_offset_table.csv"
+    high_diff_csv = "table/lip_high_angle_diff_joints.csv"
+    student_video_path = "videos/lip_me_resampled_800.mp4"
+    teacher_video_path = "videos/lip_teacher_resampled_800.mp4"
+    output_video_path = "output/lip_highlighted_skeleton_video.mp4"
 
     os.makedirs("output", exist_ok=True)
 

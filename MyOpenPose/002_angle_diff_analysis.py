@@ -131,7 +131,7 @@ def save_high_angle_diff_joints(angle_matrix, threshold, output_path):
 
 
 def main():
-    input_csv = "table/girls_angle_offset_table.csv"
+    input_csv = "table/lip_angle_offset_table.csv"   #change here
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
 
@@ -140,13 +140,13 @@ def main():
     print(f"Loaded angle matrix of shape: {angle_matrix.shape}")
 
     # Save high angle difference joints
-    high_angle_diff_path =  "table/girls_high_angle_diff_joints.csv"
+    high_angle_diff_path =  "table/lip_high_angle_diff_joints.csv"  #change here girls_high_angle_diff_joints.csv
     save_high_angle_diff_joints(angle_matrix, threshold=0.6, output_path=high_angle_diff_path)
 
     # Other analysis and plotting (already implemented)
-    plot_frame_average_difference(angle_matrix, save_path=os.path.join(output_dir, "1frame_average_difference.png"))
-    plot_joint_average_difference(angle_matrix, save_path=os.path.join(output_dir, "1joint_average_difference.png"))
-    cluster_frames_by_angles(angle_matrix, n_clusters=3, save_path=os.path.join(output_dir, "1frame_clustering.png"))
+    plot_frame_average_difference(angle_matrix, save_path=os.path.join(output_dir, "lip_frame_average_difference.png"))  #change here
+    plot_joint_average_difference(angle_matrix, save_path=os.path.join(output_dir, "lip_joint_average_difference.png"))
+    cluster_frames_by_angles(angle_matrix, n_clusters=3, save_path=os.path.join(output_dir, "lip_frame_clustering.png"))
     dynamic_time_warping(angle_matrix)
 
     print("Analysis complete. Outputs saved in 'output' folder.")
