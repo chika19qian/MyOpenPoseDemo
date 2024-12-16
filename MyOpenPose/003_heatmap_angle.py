@@ -6,18 +6,18 @@ import json
 
 def load_angle_offset_table_csv(csv_path):
     """
-    从 CSV 文件读取角度偏移表（帧×关节点的角度差异矩阵）。
-    返回: numpy array shape = (num_frames, num_joints), 以及frames列表
+    Load angle offset table (angle difference matrix of frames × joints) from a CSV file.
+    Returns: numpy array shape = (num_frames, num_joints), and a list of frames.
     """
     with open(csv_path, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
         rows = list(reader)
 
-    # rows[0] 是 header: ["frame_index", "joint_0", "joint_1", ...]
+    # rows[0] is the header: ["frame_index", "joint_0", "joint_1", ...]
     header = rows[0]
-    data_rows = rows[1:]  # 从第二行开始是实际数据
+    data_rows = rows[1:]  # Actual data starts from the second row
 
-    num_joints = len(header) - 1  # header结构: [frame_index, joint_0, ..., joint_n]
+    num_joints = len(header) - 1  # Header structure: [frame_index, joint_0, ..., joint_n]
 
     frames = []
     angle_matrix = []
@@ -27,7 +27,7 @@ def load_angle_offset_table_csv(csv_path):
         frame_idx = int(row[0])
         frames.append(frame_idx)
 
-        # 解析角度数据
+        # Parse angle data
         angle_values = []
         for val in row[1:]:  # joint_0...joint_n
             if val.strip() == '':
@@ -39,14 +39,13 @@ def load_angle_offset_table_csv(csv_path):
     angle_matrix = np.array(angle_matrix)  # shape=(num_frames, num_joints)
     return frames, angle_matrix
 
-
 def load_angle_offset_table_json(json_path):
     """
-    从 JSON 文件读取角度偏移表。JSON格式大致是：
+    Load angle offset table from a JSON file. The JSON format is roughly:
     [
       {"frame_index": i, "angles": [a0, a1, a2, ...]}, ...
     ]
-    返回 numpy array shape=(num_frames, num_joints)
+    Returns numpy array shape=(num_frames, num_joints).
     """
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -64,18 +63,18 @@ def load_angle_offset_table_json(json_path):
 
 def plot_angle_heatmap(angle_matrix, frames, title="Angle Difference Heatmap", save_path=None):
     """
-    绘制角度偏移的热力图。angle_matrix shape=(num_frames, num_joints)
-    横轴=帧index, 纵轴=关节点index
+    Plot a heatmap of angle offsets. angle_matrix shape=(num_frames, num_joints)
+    X-axis = frame index, Y-axis = joint index.
     """
-    angle_matrix = np.nan_to_num(angle_matrix, nan=0.0)  # 将 NaN 替换为 0
+    angle_matrix = np.nan_to_num(angle_matrix, nan=0.0)  # Replace NaN with 0
 
     num_frames, num_joints = angle_matrix.shape
 
     plt.figure(figsize=(10, 6))
-    # 转置矩阵以确保 x=frames, y=joints
+    # Transpose matrix to ensure x=frames, y=joints
     data_for_plot = angle_matrix.T  # shape=(num_joints, num_frames)
 
-    # 选择更容易分辨的颜色映射，如 'coolwarm' 或 'viridis'
+    # Use a color map such as 'coolwarm' or 'viridis' for better visual distinction
     plt.imshow(data_for_plot, aspect='auto', cmap='viridis', origin='lower')
     plt.colorbar(label="Angle Difference (radians)")
 
@@ -83,9 +82,9 @@ def plot_angle_heatmap(angle_matrix, frames, title="Angle Difference Heatmap", s
     plt.ylabel("Joint Index")
     plt.title(title)
 
-    # 设置 x 坐标刻度
-    plt.xticks(np.linspace(0, num_frames - 1, min(num_frames, 10)).astype(int))  
-    plt.yticks(np.arange(num_joints))  # 每个关节点一个刻度
+    # Set x-axis ticks
+    plt.xticks(np.linspace(0, num_frames - 1, min(num_frames, 10)).astype(int))
+    plt.yticks(np.arange(num_joints))  # One tick for each joint
 
     if save_path:
         plt.savefig(save_path, dpi=150)
@@ -94,10 +93,8 @@ def plot_angle_heatmap(angle_matrix, frames, title="Angle Difference Heatmap", s
         plt.show()
     plt.close()
 
-
-
 def main():
-    # 修改为角度偏移表路径
+    # Update paths to the angle offset table
     csv_path = os.path.join("table", "lip_angle_offset_table.csv")
     json_path = os.path.join("table", "angle_offset_table.json")
 
@@ -121,7 +118,6 @@ def main():
         )
     else:
         print("No angle_offset_table CSV or JSON found in 'table' folder. Please check your path.")
-
 
 if __name__ == "__main__":
     main()

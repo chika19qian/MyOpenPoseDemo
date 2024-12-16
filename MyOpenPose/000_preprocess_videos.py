@@ -3,8 +3,8 @@ import cv2
 
 def resample_video(input_path, output_path, target_frames, target_fps=30, resize_dim=None):
     """
-    将 input_path 视频重采样到 target_frames 帧数，帧率 target_fps。
-    如果 resize_dim=(w, h)，则把帧缩放到 (w,h)。
+    Resample the video at input_path to have target_frames and target_fps.
+    If resize_dim=(w, h), scale frames to (w, h).
     """
     cap = cv2.VideoCapture(input_path)
     if not cap.isOpened():
@@ -30,7 +30,7 @@ def resample_video(input_path, output_path, target_frames, target_fps=30, resize
 
     written_count = 0
     for i in range(target_frames):
-        # 根据比例定位原视频帧
+        # Locate the source frame in the original video based on the proportion
         src_idx = i * (original_frames / target_frames)
         cap.set(cv2.CAP_PROP_POS_FRAMES, src_idx)
         ret, frame = cap.read()
@@ -52,16 +52,16 @@ def main():
     student_video = "examples/lip_me.mp4"
     teacher_video = "examples/lip_teacher.mp4"
 
-    # 打开老师视频，获取它的帧数和FPS，用来统一时长
+    # Open the teacher's video to get its frame count and FPS for unifying duration
     cap_t = cv2.VideoCapture(teacher_video)
     teacher_frames = int(cap_t.get(cv2.CAP_PROP_FRAME_COUNT))
     teacher_fps = cap_t.get(cv2.CAP_PROP_FPS)
     cap_t.release()
 
-    # 固定分辨率 800×1200 ; 1280x700
+    # Fixed resolution 800×1200 ; 1280x700
     fixed_w, fixed_h = 800, 1200
 
-    # 把学生视频重采样到 (teacher_frames, teacher_fps)，同时强制 800×1200
+   # Resample the student video to match (teacher_frames, teacher_fps) and force resolution to 800×1200
     resample_video(
         input_path=student_video,
         output_path="videos/lip_me_resampled_800.mp4",
@@ -70,7 +70,7 @@ def main():
         resize_dim=(fixed_w, fixed_h)  # 固定宽高
     )
 
-    # 老师视频也可以保存一份新文件，让两段都变成 800×1200 大小
+    # Save a new version of the teacher video as well, making both 800×1200 in size
     resample_video(
         input_path=teacher_video,
         output_path="videos/lip_teacher_resampled_800.mp4",

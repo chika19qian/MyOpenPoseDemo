@@ -113,10 +113,10 @@ def dynamic_time_warping(angle_matrix):
 
 def save_high_angle_diff_joints(angle_matrix, threshold, output_path):
     """
-    保存高角度差异关节点信息。
-    :param angle_matrix: 角度差异矩阵 (num_frames, num_joints)
-    :param threshold: 高角度差异的阈值
-    :param output_path: 输出 CSV 文件路径
+    Save high angle difference joint information.
+    :param angle_matrix: Angle difference matrix (num_frames, num_joints)
+    :param threshold: Threshold for high angle differences
+    :param output_path: Output CSV file path
     """
     with open(output_path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)

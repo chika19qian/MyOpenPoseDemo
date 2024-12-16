@@ -27,19 +27,19 @@ def load_keypoints_from_csv(csv_path):
 
 def load_angles_from_csv(csv_path):
     """
-    从 CSV 文件加载角度数据
-    :param csv_path: CSV 文件路径
-    :return: 每一帧的角度差异列表，格式 [[angle1, angle2, ...], ...]
+    Load angle data from a CSV file.
+    :param csv_path: Path to the CSV file.
+    :return: List of angle differences for each frame, formatted as [[angle1, angle2, ...], ...].
     """
     angles_list = []
     with open(csv_path, 'r') as f:
         reader = csv.reader(f)
-        next(reader)  # 跳过标题行
+        next(reader)  
         for row in reader:
-            if not row:  # 如果该行为空，跳过
+            if not row:  
                 angles_list.append(None)
                 continue
-            angles = [float(a) if a else None for a in row[1:]]  # 忽略第一列 (frame_index)
+            angles = [float(a) if a else None for a in row[1:]]  
             angles_list.append(angles)
     return angles_list
 
