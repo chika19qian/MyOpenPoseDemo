@@ -2,6 +2,8 @@
 
 This repository provides a comprehensive set of tools to analyze, process, and visualize joint angle differences between two videos (e.g., student vs. teacher movements). The project leverages keypoint extraction, dynamic time warping, and skeleton visualization to highlight areas of significant movement differences. This README.md is made by chatGPT. 😊
 
+models, bin, tables and output, check from: https://drive.google.com/drive/folders/1PSy92vllcudy35nP8EFolWO0oyZj5Ktp?usp=sharing
+
 ## Features
 
 1. **Keypoint Extraction**:
