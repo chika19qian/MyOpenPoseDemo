@@ -148,19 +148,20 @@ The output will be saved in the `output/` directory.
 ## Example Output
 
 - **Frame-Wise Average Angle Differences**:
-  ![Frame Average](output/lip_frame_average_difference.png)
+  ![Frame Average]![1angle_heatmap_csv](https://github.com/user-attachments/assets/80399006-6e87-46c9-929c-12af44efbd99)
+
 
 - **Joint-Wise Average Angle Differences**:
-  ![Joint Average](output/lip_joint_average_difference.png)
+  ![Joint Average]![1joint_average_difference](https://github.com/user-attachments/assets/7aa935fe-7801-401b-b6de-0bb7b8aa0ea3)
 
 - **Clustering Visualization**:
-  ![Clustering](output/lip_frame_clustering.png)
+  ![Clustering]![1frame_clustering](https://github.com/user-attachments/assets/52f94cac-00f7-434b-a931-8deb96cfbf56)
 
 - **Heatmap**:
-  ![Heatmap Example](output/lip_angle_heatmap_csv.png)
+  ![Heatmap Example]![1angle_heatmap_csv](https://github.com/user-attachments/assets/d68c9bef-4112-42e1-9d18-da0adc3d6239)
 
 - **Skeleton Visualization**:
-  ![Skeleton Video](output/lip_highlighted_skeleton_video.mp4)
+  ![Skeleton Video]
 
 ## Contribution
 
