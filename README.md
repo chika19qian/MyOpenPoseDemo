@@ -4,6 +4,16 @@ This repository provides a comprehensive set of tools to analyze, process, and v
 
 models, bin, tables and output, check from: https://drive.google.com/drive/folders/1PSy92vllcudy35nP8EFolWO0oyZj5Ktp?usp=sharing
 
+## Environment
+
+- Python 3.8.5
+- Opencv-python >=4.5
+- NumPy >=1.20
+- Matplotlib >=3.3
+- OpenPose (Python API, manually compiled)
+- scikit-learn >=0.24
+- fastdtw >=0.3.4
+
 ## Features
 
 1. **Keypoint Extraction**:
@@ -135,15 +145,7 @@ The output will be saved in the `output/` directory.
 └── README.md
 ```
 
-## Requirements
 
-- Python 3.8+
-- OpenCV
-- NumPy
-- Matplotlib
-- OpenPose (Python API, manually compiled)
-- scikit-learn
-- fastdtw
 
 ## Example Output
 
